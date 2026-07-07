@@ -1,3 +1,4 @@
+
 import  {createContext, useState, useEffect, useContext} from "react";
 import api from "../services/config";
 
@@ -20,15 +21,20 @@ function ProductsProvider({ children }) {
 
         fetchProducts();
     }, []);
-  return <ProductContext.Provider value={{products}}>{children}</ProductContext.Provider>
+  return <ProductContext.Provider value={ {products} }>{children}</ProductContext.Provider>
 }
 
 
-const useProducts = ()=>{
-   const products = useContext (ProductContext );
+const useProducts = () => {
+   const products = useContext(ProductContext);
    return products;
-}
+};
 
+const useProductDetails = (id) => {
+    const products = useContext(ProductContext);
+    const result = products.find((product) => product.id === id);
+    return result;
+};
 
 export default ProductsProvider;
-export {useProducts};
+export {useProducts, useProductDetails};
